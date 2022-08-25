@@ -21,13 +21,19 @@ public class Bot extends TelegramLongPollingBot {
         try {
             execute(new SendMessage().setChatId(update.getMessage().getChatId()).setText("Hi!"));
         } catch (TelegramApiException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
     @Override
     public void onUpdatesReceived(List<Update> updates) {
-        super.onUpdatesReceived(updates);
+        try {
+            for (Update update: updates) {
+                execute(new SendMessage().setChatId(update.getMessage().getChatId()).setText("Hi!"));
+            }
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
