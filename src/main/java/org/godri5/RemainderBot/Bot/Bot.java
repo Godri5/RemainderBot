@@ -1,48 +1,45 @@
 package org.godri5.RemainderBot.Bot;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.List;
-
-@Component
 public class Bot extends TelegramLongPollingBot {
-    @Value("${bot.name}")
-    private String botUsername;
 
-    @Value("${bot.token")
-    private String botToken;
-
+    /**
+     * Метод для приема сообщений.
+     * @param update Содержит сообщение от пользователя.
+     */
     @Override
     public void onUpdateReceived(Update update) {
-        try {
-            execute(new SendMessage().setChatId(update.getMessage().getChatId()).setText("Hi!"));
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-    }
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            SendMessage message = new SendMessage(); // Create a SendMessage object with mandatory fields
+            message.setChatId(update.getMessage().getChatId().toString());
+            message.setText(update.getMessage().getText());
 
-    @Override
-    public void onUpdatesReceived(List<Update> updates) {
-        try {
-            for (Update update: updates) {
-                execute(new SendMessage().setChatId(update.getMessage().getChatId()).setText("Hi!"));
+            try {
+                execute(message); // Call method to send the message
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
             }
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
         }
     }
 
+    /**
+     * Метод возвращает имя бота, указанное при регистрации.
+     * @return имя бота
+     */
     @Override
     public String getBotUsername() {
-        return botUsername;
+        return "BuyDrugNotifyier_bot";
     }
 
+    /**
+     * Метод возвращает token бота для связи с сервером Telegram
+     * @return token для бота
+     */
     @Override
     public String getBotToken() {
-        return botToken;
+        return "5618238478:AAEo2_KspUI-6WKamGAwDIciKpT5YqVashw";
     }
 }

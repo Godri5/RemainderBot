@@ -18,9 +18,9 @@
     <dependencies>
         <!-- Spring Boot -->
         <dependency>
-            <groupId>com.github.xabgesagtx</groupId>
-            <artifactId>telegram-spring-boot-starter</artifactId>
-            <version>${telegarambots-spring.version}</version>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
+            <version>6.1.0</version>
         </dependency>
     </dependencies>
 
